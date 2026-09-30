@@ -29,8 +29,12 @@ export default async function OffresPage({
   const offers = (data ?? []) as Offer[];
 
   const { data: all } = await supabase.from('offers').select('asset, market');
-  const assets = [...new Set((all ?? []).map((o: any) => o.asset))];
-  const markets = [...new Set((all ?? []).map((o: any) => o.market))];
+  const assets: string[] = Array.from(
+    new Set<string>((all ?? []).map((o: any) => o.asset as string))
+  );
+  const markets: string[] = Array.from(
+    new Set<string>((all ?? []).map((o: any) => o.market as string))
+  );
 
   const chip = (active: boolean) =>
     `rounded-md px-3 py-1.5 text-sm ${
